@@ -26,9 +26,29 @@ public class PizzaController {
         });
 
     }
+    @GetMapping("/pizza/{id}")
+    public Optional<Pizza> getBook(@PathVariable Long id) {
+        return pizzaRepository.findById(id);
+    }
     @GetMapping("/pizza")
     public Iterable<Pizza> getAllpizzas() {
         return pizzaRepository.findAll();
 
     }
+
+    @PutMapping("/pizza/{customer_id}/pizza")
+    public Optional<Pizza> updateePizza(@PathVariable(value = "customer_id") Long customer_id, @Validated @RequestBody Pizza pizza) {
+        return customerRepository.findById(customer_id).map(customer -> {
+            pizza.setCustomer(customer);
+            return pizzaRepository.save(pizza);
+        });
+
+    }
+
+    @DeleteMapping("/pizza/{id}")
+    public void deleteBook(@PathVariable Long id) {
+        pizzaRepository.deleteById(id);
+    }
+
+
 }

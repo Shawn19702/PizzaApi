@@ -28,4 +28,10 @@ public class CustomerController {
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<?> getCustomer(Long Id) {
+        Customer p = customerRepository.findById(Id).orElse(null);
+        return new ResponseEntity<>(p, HttpStatus.OK);
+    }
+
 }
