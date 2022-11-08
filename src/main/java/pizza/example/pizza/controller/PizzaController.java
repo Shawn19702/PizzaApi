@@ -27,7 +27,7 @@ public class PizzaController {
         return customerRepository.findById(customer_id).map(customer -> {
             pizza.setCustomer(customer);
             return pizzaRepository.save(pizza);
-        });//.orElseThrow(() -> new ResourceNotFoundException("categoryid " + categoryid + " not found"));
+        });
 
     }
 }
