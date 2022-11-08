@@ -27,7 +27,7 @@ public class PizzaController {
 
     }
     @GetMapping("/pizza/{id}")
-    public Optional<Pizza> getBook(@PathVariable Long id) {
+    public Optional<Pizza> getPizza(@PathVariable Long id) {
         return pizzaRepository.findById(id);
     }
     @GetMapping("/pizza")
@@ -46,7 +46,7 @@ public class PizzaController {
     }
 
     @DeleteMapping("/pizza/{id}")
-    public void deleteBook(@PathVariable Long id) {
+    public void deletePizza(@PathVariable Long id) {
         pizzaRepository.deleteById(id);
     }
 

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pizza.example.pizza.model.Customer;
 import pizza.example.pizza.repository.CustomerRepository;
 
@@ -28,14 +25,22 @@ public class CustomerController {
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
-    @GetMapping("/customer/{id}")
-    public ResponseEntity<?> getCustomer(Long Id) {
-        Customer p = customerRepository.findById(Id).orElse(null);
+    @GetMapping("/customer/{customer_id}")
+    public ResponseEntity<?> getCustomer(Long customer_id) {
+        Customer p = customerRepository.findById(customer_id).orElse(null);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
+    @PutMapping("/customer/{customer_id}")
 
     public ResponseEntity<?> updateCustomer(Customer customer, Long customer_id) {
         customerRepository.save(customer);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+    @DeleteMapping("/customer/{customer_id}")
+
+    public ResponseEntity<?> deleteCustomer(Long category_id) {
+        customerRepository.deleteById(category_id);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
