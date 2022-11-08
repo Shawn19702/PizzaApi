@@ -34,4 +34,10 @@ public class CustomerController {
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
+    public ResponseEntity<?> updateCustomer(Customer customer, Long customer_id) {
+        customerRepository.save(customer);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 }
