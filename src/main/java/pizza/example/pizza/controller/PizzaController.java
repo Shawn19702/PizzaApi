@@ -23,7 +23,7 @@ public class PizzaController {
 
     @PostMapping("/pizza/{customer_id}/pizza")
 
-    public Optional<Pizza> createBook(@PathVariable(value = "customer_id") Long customer_id, @Validated @RequestBody Pizza pizza) {
+    public Optional<Pizza> createPizza(@PathVariable(value = "customer_id") Long customer_id, @Validated @RequestBody Pizza pizza) {
         return customerRepository.findById(customer_id).map(customer -> {
             pizza.setCustomer(customer);
             return pizzaRepository.save(pizza);
