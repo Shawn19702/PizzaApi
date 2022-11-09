@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import pizza.example.pizza.model.Customer;
 import pizza.example.pizza.repository.CustomerRepository;
 
+import java.util.Optional;
+
 @RestController
 public class CustomerController {
 
@@ -26,21 +28,25 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/{customer_id}")
-    public ResponseEntity<?> getCustomer(Long customer_id) {
+    public ResponseEntity<?> getCustomer(@PathVariable Long customer_id) {
         Customer p = customerRepository.findById(customer_id).orElse(null);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
+
+
     @PutMapping("/customer/{customer_id}")
-
-    public ResponseEntity<?> updateCustomer(Customer customer, Long customer_id) {
-        customerRepository.save(customer);
-        return new ResponseEntity<>(HttpStatus.OK);
-
+    public Optional<Customer> updateCustomer(@PathVariable Long customer_id, @Validated @RequestBody Customer customerRequest) {
+        return customerRepository.findById(customer_id).map(customer -> {
+            customer.setName(customerRequest.getName());
+            customer.setPhone(customerRequest.getPhone());
+            return customerRepository.save(customer);
+        });//.orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
     }
-    @DeleteMapping("/customer/{customer_id}")
 
-    public ResponseEntity<?> deleteCustomer(Long category_id) {
-        customerRepository.deleteById(category_id);
+
+    @DeleteMapping("/customer/{customer_id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long customer_id) {
+        customerRepository.deleteById(customer_id);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

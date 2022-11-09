@@ -1,6 +1,9 @@
 package pizza.example.pizza.controller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pizza.example.pizza.model.Pizza;
@@ -16,6 +19,7 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+
 
 
     @PostMapping("/pizza/{customer_id}/pizza")
@@ -37,7 +41,7 @@ public class PizzaController {
     }
 
     @PutMapping("/pizza/{customer_id}/pizza")
-    public Optional<Pizza> updateePizza(@PathVariable(value = "customer_id") Long customer_id, @Validated @RequestBody Pizza pizza) {
+    public Optional<Pizza> updateePizza(@PathVariable(value = "customer_id") @JsonInclude Long customer_id, @Validated @RequestBody Pizza pizza) {
         return customerRepository.findById(customer_id).map(customer -> {
             pizza.setCustomer(customer);
             return pizzaRepository.save(pizza);
@@ -51,4 +55,7 @@ public class PizzaController {
     }
 
 
-}
+    }
+
+
+
